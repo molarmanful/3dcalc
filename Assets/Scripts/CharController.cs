@@ -5,9 +5,9 @@ using UnityEngine;
 public class CharController : MonoBehaviour
 {
   public float speed = 10f;
-  public Phase ph;
 
   CharacterController ch;
+  Phase phase;
   float translate;
   float strafe;
   float fly;
@@ -16,12 +16,13 @@ public class CharController : MonoBehaviour
   {
     Cursor.lockState = CursorLockMode.Locked;
     ch = GetComponent<CharacterController>();
+    phase = Object.FindObjectOfType<Phase>();
   }
 
   void Update()
   {
     translate = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-    fly = ph.isOn ? Input.GetAxis("Jump") * speed * Time.deltaTime : 0;
+    fly = phase.isOn ? Input.GetAxis("Jump") * speed * Time.deltaTime : 0;
     strafe = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
     ch.Move(transform.TransformDirection(new Vector3(strafe, fly, translate)));
 
